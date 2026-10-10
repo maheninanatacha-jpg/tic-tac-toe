@@ -1,6 +1,6 @@
-import { createPlayer } from "./gameboard.js";
+import { createPlayer } from "./player.js";
 import { GameBoard } from "./gameboard.js";
-const GameController = (() => {
+export const GameController = (() => {
   const players = [
     createPlayer("Joueur 1", "X"),
     createPlayer("Joueur 2", "O"),
@@ -38,38 +38,36 @@ const GameController = (() => {
     }
   };
 
-  let message = "";
+  const turnMessage = () =>
+  `Au tour de ${currentPlayer.name} (${currentPlayer.mark})`;
+
+  let message = turnMessage();
+  
   const playRound = (index) => {
-    // 1. si gameOver, ne rien faire
-    if (gameOver) {
-      return;
-    }
-    // 2. placer le symbole avec GameBoard.placeMark
-    //    (si ça retourne false, afficher un message et s'arrêter)
-    if (!GameBoard.placeMark(index, currentPlayer.mark)) {
-      message = "Case déjà occupée !";
-      return;
-    }
+  if (gameOver) return;
 
-    // 3. si checkWin() : afficher le gagnant, gameOver = true
-    if (checkWin()) {
-      message = `${currentPlayer.name} a gagné !`;
-      gameOver = true;
-    }
-    else if (checkTie()) {
-      message = "Match nul !";
-      gameOver = true;
-    }
-    else {
-      switchPlayer();
-    }
-
+  if (!GameBoard.placeMark(index, currentPlayer.mark)) {
+    message = "Case déjà occupée !";
+    return;
   }
+
+  if (checkWin()) {
+    message = `${currentPlayer.name} a gagné !`;
+    gameOver = true;
+  } else if (checkTie()) {
+    message = "Match nul !";
+    gameOver = true;
+  } else {
+    switchPlayer();
+    message = turnMessage();
+  }
+};
 
   const resetGame = () => {
     GameBoard.resetBoard();
     currentPlayer = players[0];
     gameOver = false;
+    message = turnMessage();
   };
 
 
@@ -78,9 +76,7 @@ const GameController = (() => {
   return { 
     playRound, 
     getCurrentPlayer: () => currentPlayer, 
-    getMessage: () => message, 
-    resetGame, 
-    getCurrentPlayer: () => currentPlayer, 
+    resetGame,     
     getMessage: () => message, 
     isGameOver: () => gameOver };
 })();

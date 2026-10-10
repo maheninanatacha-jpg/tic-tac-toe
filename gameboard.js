@@ -26,12 +26,6 @@ export const GameBoard = ( ()=>{
     return {getBoard, placeMark, resetBoard}
 }
 )();
-//tests
-GameBoard.placeMark(0, "X");
-GameBoard.placeMark(1, "O");
-console.log(GameBoard.getBoard()); // ["X", "O", " ", " ", " ", " ", " ", " ", " "]
-GameBoard.resetBoard();
-console.log(GameBoard.getBoard()); // [" ", " ", " ", " ", " ", " ", " ", " ", " "]
 
 
 //les joueurs
@@ -45,14 +39,3 @@ export const createPlayer = (name, mark) => {
     return {name, mark, getScore, addPoint}
 };
 
-const alice= createPlayer("Alice", "X");
-const bob= createPlayer("Bob", "O");
-alice.addPoint();
-alice.addPoint();
-
-bob.addPoint();
-bob.addPoint();
-
-console.log(alice.getScore()); // 2
-console.log(bob.getScore()); // 2
-console.log(alice.score)
