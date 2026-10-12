@@ -15,6 +15,7 @@ const DisplayController = (() => {
       boardDiv.appendChild(cell);
     });
     messageDiv.textContent = GameController.getMessage();
+    
   };
 
   boardDiv.addEventListener("click", (e) => {
@@ -26,6 +27,14 @@ const DisplayController = (() => {
 
   document.querySelector("#restart").addEventListener("click", () => {
     GameController.resetGame();
+    render();
+  });
+
+  document.querySelector("#players-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const nameX = document.querySelector("#name-x").value;
+    const nameO = document.querySelector("#name-o").value;
+    GameController.setPlayers(nameX, nameO);
     render();
   });
 

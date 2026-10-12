@@ -1,11 +1,11 @@
 import { createPlayer } from "./player.js";
 import { GameBoard } from "./gameboard.js";
 export const GameController = (() => {
-  const players = [
-    createPlayer("Joueur 1", "X"),
-    createPlayer("Joueur 2", "O"),
+  let players = [
+    createPlayer("Joueur X", "X"),
+    createPlayer("Joueur O", "O"),
   ];
-  let currentPlayer = players[0];
+  
   let gameOver = false;
 
   const winningCombos = [
@@ -71,12 +71,25 @@ export const GameController = (() => {
   };
 
 
+  let setPlayers = (name1, name0) => {
+    const finalName1 = name1.trim() === "" ? "Joueur X" : name1.trim();
+    const finalName0 = name0.trim() === "" ? "Joueur O" : name0.trim();
+    players = [
+      createPlayer(finalName1, "X"),
+      createPlayer(finalName0, "O"),
+    ];
+    currentPlayer = players[0];
+    resetGame();  
+  };
+
+
 
 
   return { 
     playRound, 
     getCurrentPlayer: () => currentPlayer, 
     resetGame,     
+    setPlayers,
     getMessage: () => message, 
     isGameOver: () => gameOver };
 })();
