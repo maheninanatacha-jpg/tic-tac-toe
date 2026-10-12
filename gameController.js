@@ -5,7 +5,7 @@ export const GameController = (() => {
     createPlayer("Joueur X", "X"),
     createPlayer("Joueur O", "O"),
   ];
-  
+  let currentPlayer = players[0];
   let gameOver = false;
 
   const winningCombos = [

@@ -6,17 +6,18 @@ const DisplayController = (() => {
   const messageDiv = document.querySelector("#message");
 
   const render = () => {
-    boardDiv.textContent = "";
-    GameBoard.getBoard().forEach((mark, index) => {
-      const cell = document.createElement("button");
-      cell.classList.add("cell");
-      cell.textContent = mark;
-      cell.dataset.index = index;
-      boardDiv.appendChild(cell);
-    });
-    messageDiv.textContent = GameController.getMessage();
-    
-  };
+  boardDiv.textContent = "";
+  GameBoard.getBoard().forEach((mark, index) => {
+    const cell = document.createElement("button");
+    cell.classList.add("cell");
+    cell.textContent = mark;
+    if (mark === "X") cell.classList.add("x");
+    if (mark === "O") cell.classList.add("o");
+    cell.dataset.index = index;
+    boardDiv.appendChild(cell);
+  });
+  messageDiv.textContent = GameController.getMessage();
+};
 
   boardDiv.addEventListener("click", (e) => {
     if (e.target.classList.contains("cell")) {
